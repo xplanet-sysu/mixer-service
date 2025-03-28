@@ -53,4 +53,4 @@ app.bind_entrypoint(entrypoint)
 if __name__ == '__main__':
     import uvicorn
 
-    uvicorn.run('main:app', port=5000)
+    uvicorn.run('main:app', port=8000)
