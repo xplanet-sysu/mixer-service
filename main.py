@@ -4,7 +4,7 @@ from fastapi import Body
 from detect_mix_service_Eth import detect
 
 app = jsonrpc.API()
-entrypoint = jsonrpc.Entrypoint('/api')
+entrypoint_v1 = jsonrpc.Entrypoint('/v1/api')
 
 class MyError(jsonrpc.BaseError):
     CODE = 5000
@@ -16,7 +16,7 @@ class MyError(jsonrpc.BaseError):
 class DetectionResult(BaseModel):
     address_status: str  # 检测状态
     risk_score: float  # 风险评分
-@entrypoint.method(errors=[MyError])
+@entrypoint_v1.method(errors=[MyError])
 def detect_mix_service(
         address: str = Body(
             ...,
@@ -48,7 +48,7 @@ def detect_mix_service(
         # 异常处理封装
         raise MyError(data={'details': str(e)})
 
-app.bind_entrypoint(entrypoint)
+app.bind_entrypoint(entrypoint_v1)
 
 if __name__ == '__main__':
     import uvicorn
